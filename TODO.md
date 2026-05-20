@@ -28,12 +28,16 @@
 - [x] Tạo model và quan hệ Eloquent
 - [x] Tạo dữ liệu mẫu bằng seeder
 - [x] Tạo tệp SQL tham khảo trong `setup/database`
-- [ ] Tạo layout Blade cơ bản
-- [ ] Cấu hình Bootstrap hoặc CSS đơn giản
+- [x] Tạo layout Blade cơ bản
+- [x] Cấu hình CSS đơn giản
 
 ## Giai đoạn 4: Xây dựng chức năng
 
-- [ ] Xây dựng chức năng đăng nhập và phân quyền cơ bản
+- [x] Xây dựng chức năng đăng nhập và đăng xuất
+- [x] Xây dựng điều hướng dashboard theo vai trò
+- [x] Xây dựng dashboard Admin cơ bản
+- [x] Xây dựng dashboard Manager cơ bản
+- [x] Xây dựng dashboard Staff cơ bản
 - [ ] Xây dựng quản lý người dùng
 - [ ] Xây dựng quản lý phòng ban
 - [ ] Xây dựng quản lý dự án
@@ -47,6 +51,7 @@
 ## Giai đoạn 5: Kiểm thử và hoàn thiện
 
 - [ ] Kiểm thử migration và dữ liệu mẫu
+- [ ] Kiểm thử đăng nhập, đăng xuất và dashboard theo vai trò
 - [ ] Kiểm thử các chức năng chính
 - [ ] Cập nhật báo cáo tiến độ trong `progress-report`
 - [ ] Hoàn thiện tài liệu trong `thesis/doc`

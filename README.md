@@ -20,33 +20,16 @@ Dự án sử dụng Laravel. Mã nguồn chính hiện nằm trong thư mục `
 - Laravel
 - MySQL
 - Blade
-- Bootstrap hoặc CSS đơn giản
-- JavaScript khi cần thiết
+- CSS đơn giản
 
-## Chức năng dự kiến
+## Chức năng hiện có
 
-- Quản lý người dùng, vai trò và phòng ban.
-- Quản lý dự án.
-- Quản lý danh mục công việc.
-- Giao việc cho nhân viên.
-- Theo dõi trạng thái và mức độ ưu tiên công việc.
-- Bình luận và ghi nhận lịch sử thay đổi trạng thái.
-- Thông báo cho người dùng.
-- Báo cáo và thống kê cơ bản.
-
-## Cấu trúc thư mục
-
-```text
-.
-├── README.md
-├── TODO.md
-├── assets/
-├── progress-report/
-├── setup/
-│   └── database/
-├── scr/
-└── thesis/
-```
+- Đăng nhập và đăng xuất bằng session Laravel.
+- Điều hướng dashboard theo vai trò Admin, Manager, Staff.
+- Dashboard Admin hiển thị tổng người dùng, phòng ban, dự án và công việc.
+- Dashboard Manager hiển thị thống kê công việc đã tạo và được giao.
+- Dashboard Staff hiển thị thống kê công việc cá nhân.
+- Nền tảng cơ sở dữ liệu cho vai trò, phòng ban, dự án, danh mục công việc, công việc, bình luận, lịch sử trạng thái và thông báo.
 
 ## Thiết lập cơ sở dữ liệu
 
@@ -58,11 +41,17 @@ cd scr
 php artisan migrate:fresh --seed
 ```
 
-Nếu chỉ muốn chạy thêm dữ liệu mẫu sau khi đã migrate:
+## Chạy ứng dụng
 
 ```bash
 cd scr
-php artisan db:seed
+php artisan serve
+```
+
+Sau đó mở trình duyệt tại:
+
+```text
+http://127.0.0.1:8000/login
 ```
 
 ## Tài khoản demo
@@ -73,6 +62,8 @@ php artisan db:seed
 | Manager | manager@example.com | password |
 | Staff | staff@example.com | password |
 
+Sau khi đăng nhập, hệ thống tự chuyển người dùng đến dashboard đúng với vai trò.
+
 ## Tệp SQL tham khảo
 
 - `setup/database/schema.sql`: cấu trúc bảng cơ sở dữ liệu chính.
@@ -80,4 +71,4 @@ php artisan db:seed
 
 ## Trạng thái hiện tại
 
-Đã xây dựng nền tảng cơ sở dữ liệu gồm migration, model, quan hệ Eloquent và dữ liệu mẫu cho hệ thống quản lý giao việc. Các chức năng CRUD và giao diện sẽ được thực hiện ở giai đoạn sau.
+Đã hoàn thành nền tảng cơ sở dữ liệu, đăng nhập, đăng xuất và dashboard cơ bản theo vai trò. Các chức năng CRUD chi tiết sẽ được thực hiện ở giai đoạn sau.
