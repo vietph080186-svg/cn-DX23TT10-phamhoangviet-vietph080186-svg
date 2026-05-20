@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KanbanController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProjectController;
@@ -22,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/kanban', [KanbanController::class, 'index'])->name('kanban.index');
     Route::get('/admin/dashboard', [DashboardController::class, 'admin'])->name('dashboard.admin');
     Route::get('/manager/dashboard', [DashboardController::class, 'manager'])->name('dashboard.manager');
     Route::get('/staff/dashboard', [DashboardController::class, 'staff'])->name('dashboard.staff');

@@ -16,8 +16,9 @@
 - [x] Thiết kế cơ sở dữ liệu MySQL ban đầu
 - [x] Xác định bảng vai trò, phòng ban, dự án, danh mục công việc, công việc, bình luận, lịch sử trạng thái và thông báo
 - [x] Phân tích luồng giao việc cơ bản
+- [x] Thiết kế Kanban cơ bản theo cột trạng thái
 - [ ] Phân tích chi tiết chức năng báo cáo và thống kê
-- [ ] Thiết kế giao diện Kanban
+- [ ] Thiết kế Kanban kéo thả
 
 ## Giai đoạn 3: Nền tảng Laravel
 
@@ -46,9 +47,10 @@
 - [x] Xây dựng bình luận công việc
 - [x] Ghi lịch sử trạng thái công việc
 - [x] Tạo thông báo cơ bản trong cơ sở dữ liệu
+- [x] Xây dựng bảng Kanban cơ bản
+- [ ] Xây dựng Kanban kéo thả
 - [ ] Xây dựng giao diện thông báo
 - [ ] Xây dựng báo cáo và thống kê cơ bản
-- [ ] Xây dựng giao diện Kanban
 
 ## Giai đoạn 5: Kiểm thử và hoàn thiện
 
@@ -59,6 +61,7 @@
 - [ ] Kiểm thử quản lý dự án
 - [ ] Kiểm thử quản lý danh mục công việc
 - [ ] Kiểm thử quy trình giao việc
+- [ ] Kiểm thử bảng Kanban cơ bản
 - [ ] Kiểm thử bình luận và lịch sử trạng thái
 - [ ] Cập nhật báo cáo tiến độ trong `progress-report`
 - [ ] Hoàn thiện tài liệu trong `thesis/doc`

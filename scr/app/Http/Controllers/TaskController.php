@@ -187,7 +187,7 @@ class TaskController extends Controller
         $this->logStatus($task, $oldStatus, $task->status, $data['note'] ?? null);
         $this->notifyByStatus($task);
 
-        return redirect()->route($this->isStaff() ? 'my-tasks.show' : 'tasks.show', $task)
+        return back()
             ->with('success', 'Đã cập nhật trạng thái công việc.');
     }
 
@@ -287,6 +287,7 @@ class TaskController extends Controller
 
         if ($this->isAdmin() || $this->isManager()) {
             return match ($task->status) {
+                'new' => ['in_progress' => $this->statuses['in_progress']],
                 'review' => ['completed' => $this->statuses['completed'], 'revision' => $this->statuses['revision']],
                 'in_progress' => ['revision' => $this->statuses['revision']],
                 default => [],

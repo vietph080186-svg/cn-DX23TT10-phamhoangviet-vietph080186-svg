@@ -41,6 +41,16 @@
         .error { margin: 6px 0 0; font-size: 14px; }
         .pagination { margin-top: 16px; }
         .checkbox-row { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
+        .kanban-board { display: grid; grid-template-columns: repeat(6, minmax(240px, 1fr)); gap: 16px; overflow-x: auto; padding-bottom: 12px; }
+        .kanban-column { min-width: 240px; background: #eef2f7; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; }
+        .kanban-title { margin: 0 0 12px; font-size: 16px; }
+        .kanban-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+        .kanban-card.overdue { border-color: #fb7185; background: #fff1f2; }
+        .muted { color: #64748b; font-size: 14px; }
+        @media (max-width: 800px) {
+            .kanban-board { display: block; overflow-x: visible; }
+            .kanban-column { margin-bottom: 16px; }
+        }
     </style>
 </head>
 <body>
@@ -48,6 +58,7 @@
         <nav class="navbar">
             <div class="nav-left">
                 <a class="brand" href="{{ route('dashboard') }}">Bảng điều khiển</a>
+                <a class="nav-link" href="{{ route('kanban.index') }}">Kanban</a>
                 @if (in_array(strtolower(Auth::user()->role?->name ?? ''), ['admin', 'manager'], true))
                     <a class="nav-link" href="{{ route('tasks.index') }}">Công việc</a>
                     <a class="nav-link" href="{{ route('projects.index') }}">Dự án</a>

@@ -34,12 +34,21 @@ Dự án sử dụng Laravel. Mã nguồn chính hiện nằm trong thư mục `
 - Bình luận trong chi tiết công việc.
 - Ghi lịch sử thay đổi trạng thái công việc.
 - Tạo thông báo cơ bản khi giao việc, gửi duyệt, hoàn thành hoặc yêu cầu sửa lại.
+- Bảng Kanban công việc theo trạng thái, có bộ lọc và nút chuyển trạng thái.
 
 ## Phân quyền chính
 
-- Admin: quản lý toàn bộ người dùng, phòng ban, dự án, danh mục và công việc.
-- Manager: quản lý dự án, danh mục và các công việc do mình tạo hoặc được giao.
-- Staff: chỉ xem công việc được giao, cập nhật tiến độ, gửi kết quả và bình luận.
+- Admin: quản lý toàn bộ người dùng, phòng ban, dự án, danh mục, công việc và bảng Kanban.
+- Manager: quản lý dự án, danh mục, công việc do mình tạo hoặc được giao, và bảng Kanban liên quan.
+- Staff: chỉ xem công việc được giao, cập nhật tiến độ, gửi kết quả, bình luận và xem Kanban cá nhân.
+
+## Luồng xử lý công việc
+
+- Staff chuyển `Mới giao` sang `Đang làm`.
+- Staff chuyển `Đang làm` sang `Chờ duyệt` sau khi nhập kết quả.
+- Admin hoặc Manager duyệt `Hoàn thành` hoặc yêu cầu `Cần sửa lại`.
+- Staff có thể chuyển `Cần sửa lại` về `Đang làm`.
+- Bảng Kanban hiện dùng nút thao tác để chuyển trạng thái, chưa hỗ trợ kéo thả.
 
 ## Thiết lập cơ sở dữ liệu
 
@@ -69,13 +78,6 @@ http://127.0.0.1:8000/login
 | Manager | manager@example.com | password |
 | Staff | staff@example.com | password |
 
-## Luồng xử lý công việc
-
-- Staff chuyển `Mới giao` sang `Đang làm`.
-- Staff chuyển `Đang làm` sang `Chờ duyệt` sau khi nhập kết quả.
-- Admin hoặc Manager duyệt `Hoàn thành` hoặc yêu cầu `Cần sửa lại`.
-- Staff có thể chuyển `Cần sửa lại` về `Đang làm`.
-
 ## Tệp SQL tham khảo
 
 - `setup/database/schema.sql`: cấu trúc bảng cơ sở dữ liệu chính.
@@ -83,4 +85,4 @@ http://127.0.0.1:8000/login
 
 ## Trạng thái hiện tại
 
-Đã hoàn thành nền tảng cơ sở dữ liệu, đăng nhập, dashboard theo vai trò, quản lý danh mục nền tảng và quy trình giao việc cơ bản. Báo cáo nâng cao, giao diện Kanban và giao diện thông báo sẽ được thực hiện ở giai đoạn sau.
+Đã hoàn thành nền tảng cơ sở dữ liệu, đăng nhập, dashboard theo vai trò, quản lý danh mục nền tảng, quy trình giao việc cơ bản và Kanban dạng nút thao tác. Báo cáo nâng cao, giao diện thông báo và Kanban kéo thả sẽ được thực hiện ở giai đoạn sau.
