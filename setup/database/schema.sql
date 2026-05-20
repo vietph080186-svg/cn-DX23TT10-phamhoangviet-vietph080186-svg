@@ -109,6 +109,8 @@ CREATE TABLE notifications (
     task_id BIGINT UNSIGNED NULL,
     title VARCHAR(255) NOT NULL,
     message TEXT NULL,
+    type VARCHAR(255) NOT NULL DEFAULT 'system',
+    link VARCHAR(255) NULL,
     is_read TINYINT(1) NOT NULL DEFAULT 0,
     read_at TIMESTAMP NULL,
     created_at TIMESTAMP NULL,

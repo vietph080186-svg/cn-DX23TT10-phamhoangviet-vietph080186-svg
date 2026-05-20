@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KanbanController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProjectController;
@@ -29,6 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/reports/tasks', [ReportController::class, 'tasks'])->name('reports.tasks');
     Route::get('/reports/users', [ReportController::class, 'users'])->name('reports.users');
     Route::get('/reports/projects', [ReportController::class, 'projects'])->name('reports.projects');
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::patch('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
+    Route::patch('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
     Route::get('/admin/dashboard', [DashboardController::class, 'admin'])->name('dashboard.admin');
     Route::get('/manager/dashboard', [DashboardController::class, 'manager'])->name('dashboard.manager');
     Route::get('/staff/dashboard', [DashboardController::class, 'staff'])->name('dashboard.staff');

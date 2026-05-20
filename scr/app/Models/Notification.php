@@ -11,6 +11,8 @@ class Notification extends Model
         'task_id',
         'title',
         'message',
+        'type',
+        'link',
         'is_read',
         'read_at',
     ];

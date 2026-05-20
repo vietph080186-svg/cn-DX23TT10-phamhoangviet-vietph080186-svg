@@ -34,6 +34,7 @@ Dự án sử dụng Laravel. Mã nguồn chính hiện nằm trong thư mục `
 - Bình luận trong chi tiết công việc.
 - Ghi lịch sử thay đổi trạng thái công việc.
 - Tạo thông báo cơ bản khi giao việc, gửi duyệt, hoàn thành hoặc yêu cầu sửa lại.
+- Thông báo trong hệ thống bằng cơ sở dữ liệu khi giao việc, gửi duyệt, hoàn thành, yêu cầu sửa lại và có bình luận mới.
 - Bảng Kanban công việc theo trạng thái, có bộ lọc và nút chuyển trạng thái.
 - Báo cáo và thống kê công việc theo trạng thái, mức ưu tiên, dự án, người dùng và phòng ban.
 - Báo cáo hiệu suất nhân viên và tiến độ dự án bằng bảng và thanh tiến độ đơn giản.
@@ -44,6 +45,7 @@ Dự án sử dụng Laravel. Mã nguồn chính hiện nằm trong thư mục `
 - Manager: quản lý dự án, danh mục, công việc do mình tạo hoặc được giao, và bảng Kanban liên quan.
 - Staff: chỉ xem công việc được giao, cập nhật tiến độ, gửi kết quả, bình luận và xem Kanban cá nhân.
 - Báo cáo được lọc theo quyền: Admin xem toàn hệ thống, Manager xem dữ liệu liên quan, Staff xem dữ liệu cá nhân.
+- Thông báo chỉ hiển thị cho đúng người nhận, không có cập nhật thời gian thực.
 
 ## Luồng xử lý công việc
 
@@ -88,6 +90,16 @@ http://127.0.0.1:8000/login
 - `http://127.0.0.1:8000/reports/users`: hiệu suất nhân viên.
 - `http://127.0.0.1:8000/reports/projects`: thống kê dự án.
 
+## Kiểm thử thông báo
+
+1. Đăng nhập Admin hoặc Manager và tạo công việc giao cho Staff.
+2. Đăng nhập Staff, mở `http://127.0.0.1:8000/notifications` và kiểm tra thông báo mới.
+3. Staff chuyển công việc sang `Chờ duyệt`, sau đó kiểm tra thông báo của người tạo.
+4. Admin hoặc Manager duyệt hoàn thành hoặc yêu cầu sửa lại, sau đó kiểm tra thông báo của Staff.
+5. Thêm bình luận trong chi tiết công việc và kiểm tra thông báo của người liên quan.
+
+Thông báo hiện chỉ dùng dữ liệu trong cơ sở dữ liệu, không dùng WebSocket, broadcast, email hoặc tự động làm mới.
+
 ## Kiểm thử báo cáo
 
 1. Đăng nhập bằng tài khoản Admin, Manager và Staff.
@@ -102,4 +114,4 @@ http://127.0.0.1:8000/login
 
 ## Trạng thái hiện tại
 
-Đã hoàn thành nền tảng cơ sở dữ liệu, đăng nhập, dashboard theo vai trò, quản lý danh mục nền tảng, quy trình giao việc cơ bản, Kanban dạng nút thao tác và báo cáo thống kê cơ bản. Xuất báo cáo nâng cao, giao diện thông báo và Kanban kéo thả sẽ được thực hiện ở giai đoạn sau.
+Đã hoàn thành nền tảng cơ sở dữ liệu, đăng nhập, dashboard theo vai trò, quản lý danh mục nền tảng, quy trình giao việc cơ bản, Kanban dạng nút thao tác, báo cáo thống kê cơ bản và thông báo trong hệ thống. Xuất báo cáo nâng cao, thông báo thời gian thực và Kanban kéo thả sẽ được thực hiện ở giai đoạn sau.

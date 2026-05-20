@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Notification;
 use App\Models\Project;
 use App\Models\Role;
 use App\Models\Task;
@@ -10,12 +9,17 @@ use App\Models\TaskCategory;
 use App\Models\TaskComment;
 use App\Models\TaskStatusLog;
 use App\Models\User;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class TaskController extends Controller
 {
+    public function __construct(private NotificationService $notifications)
+    {
+    }
+
     private array $statuses = [
         'new' => 'Mới giao',
         'in_progress' => 'Đang làm',
@@ -79,7 +83,7 @@ class TaskController extends Controller
         $data['creator_id'] = Auth::id();
 
         $task = Task::create($data);
-        $this->createNotification($task->assignee_id, $task, 'Công việc mới', 'Bạn vừa được giao công việc mới.');
+        $this->createNotification($task->assignee_id, $task, 'Công việc mới được giao', 'Bạn vừa được giao một công việc mới.', 'task_assigned');
 
         return redirect()->route('tasks.show', $task)
             ->with('success', 'Đã tạo công việc thành công.');
@@ -207,6 +211,13 @@ class TaskController extends Controller
             'content' => $data['content'],
         ]);
 
+        collect([$task->creator_id, $task->assignee_id])
+            ->filter(fn ($userId) => $userId && $userId !== Auth::id())
+            ->unique()
+            ->each(function ($userId) use ($task) {
+                $this->createNotification($userId, $task, 'Bình luận mới', 'Có bình luận mới trong công việc: '.$task->title, 'task_commented');
+            });
+
         return back()->with('success', 'Đã thêm bình luận.');
     }
 
@@ -312,30 +323,29 @@ class TaskController extends Controller
     private function notifyByStatus(Task $task): void
     {
         if ($task->status === 'review') {
-            $this->createNotification($task->creator_id, $task, 'Công việc chờ duyệt', 'Nhân viên đã gửi công việc để duyệt.');
+            $this->createNotification($task->creator_id, $task, 'Công việc chờ duyệt', 'Nhân viên đã gửi công việc để duyệt.', 'task_submitted');
         }
 
         if ($task->status === 'completed') {
-            $this->createNotification($task->assignee_id, $task, 'Công việc hoàn thành', 'Công việc của bạn đã được duyệt hoàn thành.');
+            $this->createNotification($task->assignee_id, $task, 'Công việc đã hoàn thành', 'Công việc của bạn đã được duyệt hoàn thành.', 'task_completed');
         }
 
         if ($task->status === 'revision') {
-            $this->createNotification($task->assignee_id, $task, 'Cần sửa lại công việc', 'Công việc cần được chỉnh sửa và gửi lại.');
+            $this->createNotification($task->assignee_id, $task, 'Công việc cần sửa lại', 'Công việc cần được chỉnh sửa và gửi lại.', 'task_revision');
         }
     }
 
-    private function createNotification(?int $userId, Task $task, string $title, string $message): void
+    private function createNotification(?int $userId, Task $task, string $title, string $message, string $type): void
     {
-        if (! $userId) {
+        if ($userId === Auth::id()) {
             return;
         }
 
-        Notification::create([
-            'user_id' => $userId,
-            'task_id' => $task->id,
-            'title' => $title,
-            'message' => $message,
-        ]);
+        $link = $userId === $task->assignee_id
+            ? route('my-tasks.show', $task, false)
+            : route('tasks.show', $task, false);
+
+        $this->notifications->createForUser($userId, $title, $message, $type, $link, $task->id);
     }
 
     private function roleName(): string
