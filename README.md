@@ -26,20 +26,22 @@ Dự án sử dụng Laravel. Mã nguồn chính hiện nằm trong thư mục `
 
 - Đăng nhập và đăng xuất bằng session Laravel.
 - Điều hướng dashboard theo vai trò Admin, Manager, Staff.
-- Dashboard Admin hiển thị tổng người dùng, phòng ban, dự án và công việc.
-- Dashboard Manager hiển thị thống kê công việc đã tạo và được giao.
-- Dashboard Staff hiển thị thống kê công việc cá nhân.
-- Admin quản lý người dùng: danh sách, thêm, xem, sửa, xóa, tìm kiếm và lọc.
-- Admin quản lý phòng ban: danh sách, thêm, xem, sửa, xóa, tìm kiếm và lọc.
-- Admin và Manager quản lý dự án: danh sách, thêm, xem, sửa, xóa, tìm kiếm và lọc.
-- Admin và Manager quản lý danh mục công việc: danh sách, thêm, xem, sửa, xóa, tìm kiếm và lọc.
-- Staff không được truy cập các trang quản lý người dùng, phòng ban, dự án và danh mục công việc.
-- Nền tảng cơ sở dữ liệu cho vai trò, phòng ban, dự án, danh mục công việc, công việc, bình luận, lịch sử trạng thái và thông báo.
+- Quản lý người dùng, phòng ban, dự án và danh mục công việc.
+- Quản lý công việc: danh sách, thêm, xem, sửa, xóa, tìm kiếm và lọc.
+- Giao công việc cho nhân viên.
+- Nhân viên xem công việc được giao, cập nhật trạng thái và gửi ghi chú kết quả.
+- Admin và Manager duyệt hoàn thành hoặc yêu cầu sửa lại công việc.
+- Bình luận trong chi tiết công việc.
+- Ghi lịch sử thay đổi trạng thái công việc.
+- Tạo thông báo cơ bản khi giao việc, gửi duyệt, hoàn thành hoặc yêu cầu sửa lại.
+
+## Phân quyền chính
+
+- Admin: quản lý toàn bộ người dùng, phòng ban, dự án, danh mục và công việc.
+- Manager: quản lý dự án, danh mục và các công việc do mình tạo hoặc được giao.
+- Staff: chỉ xem công việc được giao, cập nhật tiến độ, gửi kết quả và bình luận.
 
 ## Thiết lập cơ sở dữ liệu
-
-1. Cấu hình kết nối cơ sở dữ liệu trong `scr/.env`.
-2. Chạy migration và seed dữ liệu mẫu:
 
 ```bash
 cd scr
@@ -53,7 +55,7 @@ cd scr
 php artisan serve
 ```
 
-Sau đó mở trình duyệt tại:
+Mở trình duyệt tại:
 
 ```text
 http://127.0.0.1:8000/login
@@ -67,11 +69,12 @@ http://127.0.0.1:8000/login
 | Manager | manager@example.com | password |
 | Staff | staff@example.com | password |
 
-Phân quyền chính:
+## Luồng xử lý công việc
 
-- Admin: truy cập dashboard, người dùng, phòng ban, dự án, danh mục công việc.
-- Manager: truy cập dashboard, dự án, danh mục công việc.
-- Staff: chỉ truy cập dashboard cá nhân.
+- Staff chuyển `Mới giao` sang `Đang làm`.
+- Staff chuyển `Đang làm` sang `Chờ duyệt` sau khi nhập kết quả.
+- Admin hoặc Manager duyệt `Hoàn thành` hoặc yêu cầu `Cần sửa lại`.
+- Staff có thể chuyển `Cần sửa lại` về `Đang làm`.
 
 ## Tệp SQL tham khảo
 
@@ -80,4 +83,4 @@ Phân quyền chính:
 
 ## Trạng thái hiện tại
 
-Đã hoàn thành nền tảng cơ sở dữ liệu, đăng nhập, đăng xuất, dashboard theo vai trò, quản lý người dùng, quản lý phòng ban, quản lý dự án và quản lý danh mục công việc. Các chức năng CRUD công việc sẽ được thực hiện ở giai đoạn sau.
+Đã hoàn thành nền tảng cơ sở dữ liệu, đăng nhập, dashboard theo vai trò, quản lý danh mục nền tảng và quy trình giao việc cơ bản. Báo cáo nâng cao, giao diện Kanban và giao diện thông báo sẽ được thực hiện ở giai đoạn sau.

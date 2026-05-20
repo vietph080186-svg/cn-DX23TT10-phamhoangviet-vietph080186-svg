@@ -64,8 +64,11 @@ CREATE TABLE tasks (
     description TEXT NULL,
     status ENUM('new', 'in_progress', 'review', 'completed', 'overdue', 'revision') NOT NULL DEFAULT 'new',
     priority ENUM('low', 'medium', 'high', 'urgent') NOT NULL DEFAULT 'medium',
+    start_date DATE NULL,
     due_date DATE NULL,
     completed_at TIMESTAMP NULL,
+    result_note TEXT NULL,
+    result_link VARCHAR(255) NULL,
     created_at TIMESTAMP NULL,
     updated_at TIMESTAMP NULL,
     CONSTRAINT tasks_project_id_foreign FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE SET NULL,
@@ -89,13 +92,15 @@ CREATE TABLE task_status_logs (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     task_id BIGINT UNSIGNED NOT NULL,
     changed_by BIGINT UNSIGNED NULL,
+    user_id BIGINT UNSIGNED NULL,
     old_status ENUM('new', 'in_progress', 'review', 'completed', 'overdue', 'revision') NULL,
     new_status ENUM('new', 'in_progress', 'review', 'completed', 'overdue', 'revision') NOT NULL,
     note TEXT NULL,
     created_at TIMESTAMP NULL,
     updated_at TIMESTAMP NULL,
     CONSTRAINT task_status_logs_task_id_foreign FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE CASCADE,
-    CONSTRAINT task_status_logs_changed_by_foreign FOREIGN KEY (changed_by) REFERENCES users(id) ON DELETE SET NULL
+    CONSTRAINT task_status_logs_changed_by_foreign FOREIGN KEY (changed_by) REFERENCES users(id) ON DELETE SET NULL,
+    CONSTRAINT task_status_logs_user_id_foreign FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
 CREATE TABLE notifications (

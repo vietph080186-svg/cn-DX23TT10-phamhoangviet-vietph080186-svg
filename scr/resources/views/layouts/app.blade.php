@@ -24,7 +24,7 @@
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
         .form-group { margin-bottom: 16px; }
         label { display: block; margin-bottom: 6px; font-weight: 600; }
-        input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="color"], select, textarea { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 15px; }
+        input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="color"], input[type="url"], select, textarea { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 15px; }
         input[type="color"] { height: 42px; padding: 4px; }
         textarea { min-height: 90px; resize: vertical; }
         table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; }
@@ -49,9 +49,11 @@
             <div class="nav-left">
                 <a class="brand" href="{{ route('dashboard') }}">Bảng điều khiển</a>
                 @if (in_array(strtolower(Auth::user()->role?->name ?? ''), ['admin', 'manager'], true))
+                    <a class="nav-link" href="{{ route('tasks.index') }}">Công việc</a>
                     <a class="nav-link" href="{{ route('projects.index') }}">Dự án</a>
                     <a class="nav-link" href="{{ route('task-categories.index') }}">Danh mục công việc</a>
                 @endif
+                <a class="nav-link" href="{{ route('my-tasks.index') }}">Công việc của tôi</a>
                 @if (strtolower(Auth::user()->role?->name ?? '') === 'admin')
                     <a class="nav-link" href="{{ route('admin.users.index') }}">Người dùng</a>
                     <a class="nav-link" href="{{ route('admin.departments.index') }}">Phòng ban</a>

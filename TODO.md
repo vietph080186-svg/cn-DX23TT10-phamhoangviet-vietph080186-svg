@@ -15,9 +15,9 @@
 - [x] Xác định vai trò người dùng: Admin, Manager, Staff
 - [x] Thiết kế cơ sở dữ liệu MySQL ban đầu
 - [x] Xác định bảng vai trò, phòng ban, dự án, danh mục công việc, công việc, bình luận, lịch sử trạng thái và thông báo
-- [ ] Phân tích chi tiết chức năng giao việc
+- [x] Phân tích luồng giao việc cơ bản
 - [ ] Phân tích chi tiết chức năng báo cáo và thống kê
-- [ ] Thiết kế giao diện chính
+- [ ] Thiết kế giao diện Kanban
 
 ## Giai đoạn 3: Nền tảng Laravel
 
@@ -41,11 +41,14 @@
 - [x] Xây dựng quản lý phòng ban
 - [x] Xây dựng quản lý dự án
 - [x] Xây dựng quản lý danh mục công việc
-- [ ] Xây dựng quản lý công việc và phân công
-- [ ] Xây dựng cập nhật trạng thái công việc
-- [ ] Xây dựng bình luận công việc
-- [ ] Xây dựng thông báo
+- [x] Xây dựng quản lý công việc và phân công
+- [x] Xây dựng cập nhật trạng thái công việc
+- [x] Xây dựng bình luận công việc
+- [x] Ghi lịch sử trạng thái công việc
+- [x] Tạo thông báo cơ bản trong cơ sở dữ liệu
+- [ ] Xây dựng giao diện thông báo
 - [ ] Xây dựng báo cáo và thống kê cơ bản
+- [ ] Xây dựng giao diện Kanban
 
 ## Giai đoạn 5: Kiểm thử và hoàn thiện
 
@@ -55,7 +58,8 @@
 - [ ] Kiểm thử quản lý phòng ban
 - [ ] Kiểm thử quản lý dự án
 - [ ] Kiểm thử quản lý danh mục công việc
-- [ ] Kiểm thử các chức năng chính
+- [ ] Kiểm thử quy trình giao việc
+- [ ] Kiểm thử bình luận và lịch sử trạng thái
 - [ ] Cập nhật báo cáo tiến độ trong `progress-report`
 - [ ] Hoàn thiện tài liệu trong `thesis/doc`
 - [ ] Xuất tài liệu sang `thesis/pdf`

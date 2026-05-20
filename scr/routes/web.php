@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TaskCategoryController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,5 +34,11 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:Admin,Manager')->group(function () {
         Route::resource('projects', ProjectController::class);
         Route::resource('task-categories', TaskCategoryController::class);
+        Route::resource('tasks', TaskController::class);
     });
+
+    Route::get('/my-tasks', [TaskController::class, 'myTasks'])->name('my-tasks.index');
+    Route::get('/my-tasks/{task}', [TaskController::class, 'show'])->name('my-tasks.show');
+    Route::patch('/tasks/{task}/status', [TaskController::class, 'updateStatus'])->name('tasks.status');
+    Route::post('/tasks/{task}/comments', [TaskController::class, 'storeComment'])->name('tasks.comments.store');
 });

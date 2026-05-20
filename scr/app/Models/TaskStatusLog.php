@@ -9,6 +9,7 @@ class TaskStatusLog extends Model
     protected $fillable = [
         'task_id',
         'changed_by',
+        'user_id',
         'old_status',
         'new_status',
         'note',
@@ -22,5 +23,10 @@ class TaskStatusLog extends Model
     public function changer()
     {
         return $this->belongsTo(User::class, 'changed_by');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

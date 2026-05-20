@@ -15,13 +15,17 @@ class Task extends Model
         'description',
         'status',
         'priority',
+        'start_date',
         'due_date',
         'completed_at',
+        'result_note',
+        'result_link',
     ];
 
     protected function casts(): array
     {
         return [
+            'start_date' => 'date',
             'due_date' => 'date',
             'completed_at' => 'datetime',
         ];
@@ -54,6 +58,6 @@ class Task extends Model
 
     public function statusLogs()
     {
-        return $this->hasMany(TaskStatusLog::class);
+        return $this->hasMany(TaskStatusLog::class)->latest();
     }
 }
