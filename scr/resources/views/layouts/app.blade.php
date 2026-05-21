@@ -224,7 +224,6 @@
                     <div class="topbar-actions">
                         <a class="button light" href="{{ route('notifications.index') }}">Thông báo {{ $unreadNotifications > 0 ? '(' . $unreadNotifications . ')' : '' }}</a>
                         <div class="user-box">
-                            <span class="user-name">{{ Auth::user()->full_name ?? Auth::user()->name }}</span>
                             <span class="role-badge">{{ $roleLabel }}</span>
                         </div>
                         <form method="POST" action="{{ route('logout') }}">
