@@ -6,34 +6,39 @@
     <main class="container">
         <h1 class="page-title">Bảng điều khiển quản lý</h1>
 
-        <section class="grid">
-            <article class="card">
-                <p class="card-title">Công việc đã tạo</p>
-                <p class="card-number">{{ $createdTasks }}</p>
+        <section class="stats-grid">
+            <article class="stat-card stat-card-primary">
+                <span class="stat-icon"></span>
+                <p class="stat-label">Công việc đã tạo</p>
+                <p class="stat-value">{{ $createdTasks }}</p>
             </article>
 
-            <article class="card">
-                <p class="card-title">Công việc được giao</p>
-                <p class="card-number">{{ $assignedTasks }}</p>
+            <article class="stat-card stat-card-primary">
+                <span class="stat-icon"></span>
+                <p class="stat-label">Công việc được giao</p>
+                <p class="stat-value">{{ $assignedTasks }}</p>
             </article>
 
-            <article class="card">
-                <p class="card-title">Đang chờ duyệt</p>
-                <p class="card-number">{{ $reviewTasks }}</p>
+            <article class="stat-card stat-card-warning">
+                <span class="stat-icon"></span>
+                <p class="stat-label">Đang chờ duyệt</p>
+                <p class="stat-value">{{ $reviewTasks }}</p>
             </article>
 
-            <article class="card">
-                <p class="card-title">Đã hoàn thành</p>
-                <p class="card-number">{{ $completedTasks }}</p>
+            <article class="stat-card stat-card-success">
+                <span class="stat-icon"></span>
+                <p class="stat-label">Đã hoàn thành</p>
+                <p class="stat-value">{{ $completedTasks }}</p>
             </article>
 
-            <article class="card">
-                <p class="card-title">Quá hạn</p>
-                <p class="card-number">{{ $overdueTasks }}</p>
+            <article class="stat-card stat-card-warning">
+                <span class="stat-icon"></span>
+                <p class="stat-label">Quá hạn</p>
+                <p class="stat-value">{{ $overdueTasks }}</p>
             </article>
         </section>
 
-        <p style="margin-top: 16px;">
+        <p style="margin-top: 20px;">
             <a class="button" href="{{ route('reports.index') }}">Xem báo cáo</a>
         </p>
     </main>

@@ -4,94 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Hệ thống quản lý giao việc')</title>
+    @if (file_exists(public_path('hot')) || file_exists(public_path('build/manifest.json')))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @endif
     <style>
         :root {
-            --blue-950: #071d49;
-            --blue-900: #0b2f76;
-            --blue-800: #1246a8;
-            --blue-700: #1d4ed8;
-            --blue-600: #2563eb;
-            --blue-500: #3b82f6;
-            --blue-100: #dbeafe;
-            --blue-50: #eff6ff;
-            --gray-900: #111827;
-            --gray-700: #374151;
-            --gray-600: #4b5563;
-            --gray-500: #6b7280;
-            --gray-200: #e5e7eb;
-            --gray-100: #f4f8ff;
-            --white: #ffffff;
-            --shadow: 0 16px 36px rgba(7, 29, 73, 0.09);
-            --shadow-strong: 0 20px 45px rgba(7, 29, 73, 0.16);
+            --primary-blue: #2563eb;
+            --dark-blue: #1e3a8a;
+            --sidebar-dark: #0f172a;
+            --sidebar-hover: #1d4ed8;
+            --light-blue: #eff6ff;
+            --page-bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border: #dbe3ef;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
         }
 
         * { box-sizing: border-box; }
-        body { margin: 0; background: var(--gray-100); color: var(--gray-900); font-family: Arial, sans-serif; }
+        body { margin: 0; background: var(--page-bg); color: var(--text-dark); font-family: Arial, sans-serif; font-size: 15px; }
         a { color: inherit; text-decoration: none; }
-        .app-shell { display: grid; grid-template-columns: 280px minmax(0, 1fr); min-height: 100vh; }
-        .sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; background: radial-gradient(circle at top left, #1d4ed8 0, transparent 34%), linear-gradient(180deg, var(--blue-950), var(--blue-900) 58%, #061638); color: var(--white); padding: 24px 18px; box-shadow: 18px 0 45px rgba(7, 29, 73, 0.18); }
-        .sidebar-brand { display: block; padding: 14px 14px 22px; border: 1px solid rgba(255,255,255,0.13); border-radius: 14px; background: rgba(255,255,255,0.08); box-shadow: inset 0 1px 0 rgba(255,255,255,0.12); }
-        .sidebar-brand strong { display: block; font-size: 19px; line-height: 1.35; letter-spacing: .01em; }
-        .sidebar-brand span { display: inline-flex; margin-top: 10px; min-height: 26px; align-items: center; padding: 0 10px; border-radius: 999px; background: rgba(219,234,254,0.16); color: #dbeafe; font-size: 13px; font-weight: 800; }
-        .sidebar-section { margin-top: 24px; padding-top: 4px; }
-        .sidebar-heading { margin: 0 12px 10px; color: #93c5fd; font-size: 11px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
-        .sidebar-link { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 6px 0; padding: 12px 14px 12px 18px; border: 1px solid transparent; border-radius: 11px; color: #dbeafe; font-size: 15px; font-weight: 800; line-height: 1.25; transition: background .15s ease, color .15s ease, border-color .15s ease, transform .15s ease; }
-        .sidebar-link::before { content: ""; position: absolute; left: 8px; top: 50%; width: 4px; height: 0; border-radius: 999px; background: var(--white); transform: translateY(-50%); transition: height .15s ease; }
-        .sidebar-link:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.12); color: var(--white); transform: translateX(2px); }
-        .sidebar-link.active { background: linear-gradient(90deg, var(--blue-500), var(--blue-700)); border-color: rgba(255,255,255,0.24); color: var(--white); box-shadow: 0 16px 30px rgba(37, 99, 235, 0.38); }
+        .app-shell { display: grid; grid-template-columns: 260px minmax(0, 1fr); min-height: 100vh; background: var(--page-bg); }
+        .sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; background: linear-gradient(180deg, var(--sidebar-dark), #10245a 58%, var(--dark-blue)); color: #e2e8f0; padding: 22px 16px; }
+        .sidebar-brand { display: block; padding: 16px 14px 18px; border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; background: rgba(37,99,235,0.16); }
+        .sidebar-brand strong { display: block; color: #ffffff; font-size: 20px; font-weight: 900; line-height: 1.25; }
+        .sidebar-brand span { display: block; margin-top: 6px; color: #bfdbfe; font-size: 13px; font-weight: 700; }
+        .sidebar-nav { margin-top: 22px; }
+        .sidebar-section { margin-top: 24px; }
+        .sidebar-section:first-child { margin-top: 0; }
+        .sidebar-heading { margin: 0 10px 10px; color: #93c5fd; font-size: 12px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+        .sidebar-link { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 44px; margin: 6px 0; padding: 11px 12px 11px 18px; border: 1px solid transparent; border-radius: 12px; color: #dbeafe; font-size: 15px; font-weight: 800; line-height: 1.25; transition: background .15s ease, border-color .15s ease, color .15s ease, transform .15s ease; }
+        .sidebar-link::before { content: ""; position: absolute; left: 8px; top: 50%; width: 4px; height: 0; border-radius: 999px; background: #ffffff; transform: translateY(-50%); transition: height .15s ease; }
+        .sidebar-link:hover { background: var(--sidebar-hover); border-color: rgba(255,255,255,0.16); color: #ffffff; transform: translateX(2px); }
+        .sidebar-link.active { background: var(--primary-blue); border-color: rgba(255,255,255,0.24); color: #ffffff; box-shadow: 0 14px 28px rgba(37,99,235,0.36); }
         .sidebar-link.active::before { height: 24px; }
-        .content-shell { min-width: 0; }
-        .topbar { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 76px; padding: 16px 32px; background: rgba(255,255,255,0.96); border-bottom: 1px solid #dbe5f4; backdrop-filter: blur(12px); box-shadow: 0 8px 24px rgba(7, 29, 73, 0.04); }
-        .topbar-title { margin: 0; color: var(--blue-950); font-size: 21px; font-weight: 900; letter-spacing: .01em; }
-        .topbar-subtitle { margin: 5px 0 0; color: var(--gray-500); font-size: 13px; font-weight: 700; }
+        .menu-label { display: inline-flex; align-items: center; gap: 10px; }
+        .menu-label::before { content: ""; width: 8px; height: 8px; border-radius: 3px; background: currentColor; opacity: .72; }
+        .main-wrapper { min-width: 0; }
+        .topbar { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 18px; min-height: 64px; padding: 14px 28px; background: var(--card-bg); border-bottom: 1px solid var(--border); }
+        .topbar-title { margin: 0; color: var(--text-dark); font-size: 22px; font-weight: 900; }
+        .topbar-subtitle { margin: 4px 0 0; color: var(--text-muted); font-size: 13px; font-weight: 700; }
         .topbar-actions, .user-box, .actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
         .user-box { justify-content: flex-end; }
-        .user-name { font-weight: 800; color: var(--gray-900); }
-        .role-badge { display: inline-flex; align-items: center; min-height: 26px; padding: 0 10px; border-radius: 999px; background: var(--blue-50); color: var(--blue-700); font-size: 13px; font-weight: 800; }
-        .container { width: min(100% - 48px, 1180px); margin: 32px auto; }
-        .page-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
-        .page-title { margin: 0; color: var(--gray-900); font-size: 30px; font-weight: 900; letter-spacing: .01em; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; }
-        .card, .panel { background: var(--white); border: 1px solid #dbe5f4; border-radius: 14px; padding: 24px; box-shadow: var(--shadow); }
-        .card { position: relative; overflow: hidden; min-height: 138px; border-top: 0; }
-        .card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 5px; background: linear-gradient(90deg, var(--blue-500), var(--blue-800)); }
-        .card::after { content: ""; position: absolute; right: -26px; top: -32px; width: 96px; height: 96px; border-radius: 50%; background: var(--blue-50); }
-        .card-title { position: relative; z-index: 1; margin: 0 0 18px; color: var(--gray-600); font-size: 14px; font-weight: 900; text-transform: uppercase; letter-spacing: .04em; }
-        .card-number { position: relative; z-index: 1; margin: 0; color: var(--blue-800); font-size: 42px; font-weight: 900; line-height: .95; }
-        .login-page { display: grid; min-height: 100vh; place-items: center; padding: 24px; background: var(--gray-100); }
-        .login-box { width: min(100%, 420px); background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; padding: 28px; box-shadow: var(--shadow); }
+        .user-name { color: var(--text-dark); font-weight: 800; }
+        .role-badge { display: inline-flex; align-items: center; min-height: 28px; padding: 0 11px; border-radius: 999px; background: var(--light-blue); color: var(--dark-blue); font-size: 13px; font-weight: 900; }
+        .main-content { padding: 28px 32px 36px; }
+        .container { width: min(100%, 1200px); margin: 0 auto; }
+        .page-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
+        .page-title { margin: 0; color: var(--text-dark); font-size: 30px; font-weight: 900; line-height: 1.2; }
+        .grid, .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; }
+        .card, .panel, .stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: var(--shadow); }
+        .card, .stat-card { position: relative; overflow: hidden; min-height: 142px; }
+        .card::before, .stat-card::before { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 5px; background: var(--primary-blue); }
+        .card::after, .stat-icon { content: ""; position: absolute; right: 22px; top: 22px; width: 42px; height: 42px; border-radius: 14px; background: var(--light-blue); border: 1px solid var(--border); }
+        .stat-card-success::before { background: var(--success); }
+        .stat-card-warning::before { background: #f59e0b; }
+        .stat-card-primary::before { background: var(--primary-blue); }
+        .card-title, .stat-label { position: relative; z-index: 1; margin: 0 58px 18px 0; color: var(--text-muted); font-size: 13px; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; }
+        .card-number, .stat-value { position: relative; z-index: 1; margin: 0; color: var(--primary-blue); font-size: 42px; font-weight: 900; line-height: 1; }
+        .login-page { display: grid; min-height: 100vh; place-items: center; padding: 24px; background: var(--page-bg); }
+        .login-box { width: min(100%, 420px); background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 28px; box-shadow: var(--shadow); }
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
         .form-group { margin-bottom: 16px; }
-        label { display: block; margin-bottom: 6px; color: var(--gray-700); font-weight: 700; }
-        input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="color"], input[type="url"], select, textarea { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; background: var(--white); }
-        input:focus, select:focus, textarea:focus { outline: 3px solid var(--blue-100); border-color: var(--blue-600); }
+        label { display: block; margin-bottom: 7px; color: var(--text-dark); font-weight: 800; }
+        input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="color"], input[type="url"], select, textarea { width: 100%; padding: 11px 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 15px; background: var(--card-bg); }
+        input:focus, select:focus, textarea:focus { outline: 3px solid var(--light-blue); border-color: var(--primary-blue); }
         input[type="color"] { height: 42px; padding: 4px; }
         textarea { min-height: 90px; resize: vertical; }
-        table { width: 100%; border-collapse: collapse; background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); }
-        th, td { padding: 13px; border-bottom: 1px solid var(--gray-200); text-align: left; vertical-align: top; }
-        th { background: var(--blue-50); color: var(--blue-950); font-size: 14px; }
-        .button { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 16px; border: 0; border-radius: 9px; background: var(--blue-600); color: var(--white); font-weight: 800; cursor: pointer; box-shadow: 0 10px 22px rgba(37, 99, 235, 0.22); }
-        .button:hover { background: var(--blue-700); }
-        .button.secondary { background: var(--blue-900); }
-        .button.danger { background: #dc2626; }
-        .button.light { background: var(--blue-50); color: var(--blue-800); box-shadow: none; border: 1px solid var(--blue-100); }
-        .alert { margin-bottom: 16px; padding: 12px 14px; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); }
+        th, td { padding: 13px 14px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+        th { background: var(--light-blue); color: var(--dark-blue); font-size: 14px; font-weight: 900; }
+        tbody tr:hover { background: #f8fbff; }
+        .button { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 16px; border: 1px solid transparent; border-radius: 10px; background: var(--primary-blue); color: #ffffff; font-weight: 900; cursor: pointer; box-shadow: 0 10px 20px rgba(37,99,235,0.18); }
+        .button:hover { background: var(--sidebar-hover); }
+        .button.secondary { background: var(--dark-blue); color: #ffffff; }
+        .button.danger { background: var(--danger); color: #ffffff; }
+        .button.success { background: var(--success); color: #ffffff; }
+        .button.light { background: #f8fafc; color: var(--text-dark); border-color: var(--border); box-shadow: none; }
+        .alert { margin-bottom: 16px; padding: 12px 14px; border-radius: 10px; }
         .alert.success { background: #dcfce7; color: #166534; }
-        .alert.error, .error { color: #dc2626; }
+        .alert.error, .error { color: var(--danger); }
         .alert.error { background: #fee2e2; }
         .error { margin: 6px 0 0; font-size: 14px; }
         .pagination { margin-top: 16px; }
         .checkbox-row { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
         .kanban-board { display: grid; grid-template-columns: repeat(6, minmax(240px, 1fr)); gap: 16px; overflow-x: auto; padding-bottom: 12px; }
-        .kanban-column { min-width: 240px; background: #eef5ff; border: 1px solid #dbeafe; border-radius: 10px; padding: 12px; }
-        .kanban-title { margin: 0 0 12px; color: var(--blue-950); font-size: 16px; }
-        .kanban-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; padding: 12px; margin-bottom: 12px; box-shadow: 0 8px 18px rgba(15, 42, 95, 0.06); }
-        .kanban-card.overdue { border-color: #fb7185; background: #fff1f2; }
-        .muted { color: var(--gray-500); font-size: 14px; }
+        .kanban-column { min-width: 240px; background: var(--light-blue); border: 1px solid var(--border); border-radius: 16px; padding: 14px; }
+        .kanban-title { margin: 0 0 12px; color: var(--dark-blue); font-size: 16px; font-weight: 900; }
+        .kanban-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 13px; margin-bottom: 12px; box-shadow: 0 8px 18px rgba(15,23,42,0.05); }
+        .kanban-card.overdue { border-color: #fecdd3; background: #fff1f2; }
+        .muted { color: var(--text-muted); font-size: 14px; }
         .progress { width: 100%; height: 12px; background: #e2e8f0; border-radius: 999px; overflow: hidden; }
-        .progress-bar { height: 100%; background: var(--blue-600); }
+        .progress-bar { height: 100%; background: var(--primary-blue); }
         .report-nav { display: flex; gap: 10px; flex-wrap: wrap; margin: 16px 0; }
-        .badge { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; background: #dc2626; color: var(--white); font-size: 12px; font-weight: 800; }
+        .badge { display: inline-flex; align-items: center; justify-content: center; min-width: 21px; height: 21px; padding: 0 7px; border-radius: 999px; background: var(--danger); color: #ffffff; font-size: 12px; font-weight: 900; }
         body:not(.has-active-overlay).modal-open,
         body:not(.has-active-overlay).loading,
         body:not(.has-active-overlay).disabled {
@@ -107,16 +116,43 @@
             pointer-events: none !important;
         }
 
+        @media (max-width: 1100px) and (min-width: 901px) {
+            .app-shell { grid-template-columns: 230px minmax(0, 1fr); }
+            .sidebar { padding: 18px 12px; }
+            .sidebar-link { padding-right: 10px; font-size: 14px; }
+            .main-content { padding: 24px 22px 32px; }
+        }
+
         @media (max-width: 900px) {
             .app-shell { display: block; }
-            .sidebar { position: static; height: auto; padding: 16px; }
-            .sidebar-brand { padding-bottom: 14px; }
-            .sidebar-section { margin-top: 14px; }
-            .sidebar-nav { display: grid; gap: 12px; }
+            .sidebar { position: static; height: auto; max-height: none; padding: 16px; }
+            .sidebar-brand { padding: 14px; }
+            .sidebar-nav { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+            .sidebar-section { margin-top: 0; }
+            .sidebar-link { min-height: 42px; margin: 5px 0; }
             .topbar { position: static; align-items: flex-start; flex-direction: column; padding: 16px 20px; }
-            .container { width: min(100% - 28px, 1160px); margin: 20px auto; }
+            .topbar-actions { width: 100%; align-items: flex-start; }
+            .main-content { padding: 20px 14px 28px; }
+            .container { width: 100%; }
+            .page-title { font-size: 26px; }
+            table { display: block; overflow-x: auto; white-space: nowrap; }
             .kanban-board { display: block; overflow-x: visible; }
             .kanban-column { margin-bottom: 16px; }
+        }
+
+        @media (max-width: 560px) {
+            body { font-size: 14px; }
+            .sidebar-nav { display: block; }
+            .sidebar-section { margin-top: 18px; }
+            .sidebar-section:first-child { margin-top: 0; }
+            .topbar-title { font-size: 20px; }
+            .topbar-actions, .user-box, .actions { gap: 8px; }
+            .button { width: 100%; }
+            .topbar-actions .button, .topbar-actions form { width: 100%; }
+            .topbar-actions form .button { width: 100%; }
+            .grid, .stats-grid { grid-template-columns: 1fr; }
+            .card, .panel, .stat-card { padding: 20px; border-radius: 14px; }
+            .card-number, .stat-value { font-size: 36px; }
         }
     </style>
 </head>
@@ -124,56 +160,63 @@
     @auth
         @php
             $roleName = strtolower(Auth::user()->role?->name ?? '');
-            $roleLabel = Auth::user()->role?->name ?? 'Người dùng';
+            $roleLabel = match ($roleName) {
+                'admin' => 'Quản trị viên',
+                'manager' => 'Quản lý',
+                'staff' => 'Nhân viên',
+                default => Auth::user()->role?->name ?? 'Người dùng',
+            };
             $unreadNotifications = \App\Models\Notification::where('user_id', Auth::id())->where('is_read', false)->count();
         @endphp
 
         <div class="app-shell">
             <aside class="sidebar">
                 <a class="sidebar-brand" href="{{ route('dashboard') }}">
-                    <strong>Hệ thống quản lý giao việc</strong>
-                    <span>{{ $roleLabel }}</span>
+                    <strong>Quản lý giao việc</strong>
+                    <span>Task Management</span>
                 </a>
 
                 <nav class="sidebar-nav" aria-label="Điều hướng chính">
                     <section class="sidebar-section">
                         <h2 class="sidebar-heading">Tổng quan</h2>
-                        <a class="sidebar-link {{ request()->routeIs('dashboard*') ? 'active' : '' }}" href="{{ route('dashboard') }}">Bảng điều khiển</a>
+                        <a class="sidebar-link {{ request()->routeIs('dashboard*') ? 'active' : '' }}" href="{{ route('dashboard') }}"><span class="menu-label">Bảng điều khiển</span></a>
                         <a class="sidebar-link {{ request()->routeIs('notifications.*') ? 'active' : '' }}" href="{{ route('notifications.index') }}">
-                            <span>Thông báo</span>
+                            <span class="menu-label">Thông báo</span>
                             @if ($unreadNotifications > 0)
                                 <span class="badge">{{ $unreadNotifications }}</span>
                             @endif
                         </a>
-                        <a class="sidebar-link {{ request()->routeIs('reports.*') ? 'active' : '' }}" href="{{ route('reports.index') }}">Báo cáo</a>
+                        <a class="sidebar-link {{ request()->routeIs('reports.*') ? 'active' : '' }}" href="{{ route('reports.index') }}"><span class="menu-label">Báo cáo</span></a>
+                        <a class="sidebar-link {{ request()->routeIs('kanban.*') ? 'active' : '' }}" href="{{ route('kanban.index') }}"><span class="menu-label">Kanban</span></a>
                     </section>
 
                     <section class="sidebar-section">
-                        <h2 class="sidebar-heading">Quản lý công việc</h2>
-                        <a class="sidebar-link {{ request()->routeIs('kanban.*') ? 'active' : '' }}" href="{{ route('kanban.index') }}">Kanban</a>
-                        <a class="sidebar-link {{ request()->routeIs('my-tasks.*') ? 'active' : '' }}" href="{{ route('my-tasks.index') }}">Công việc của tôi</a>
+                        <h2 class="sidebar-heading">Công việc</h2>
                         @if (in_array($roleName, ['admin', 'manager'], true))
-                            <a class="sidebar-link {{ request()->routeIs('tasks.*') ? 'active' : '' }}" href="{{ route('tasks.index') }}">Công việc</a>
-                            <a class="sidebar-link {{ request()->routeIs('projects.*') ? 'active' : '' }}" href="{{ route('projects.index') }}">Dự án</a>
-                            <a class="sidebar-link {{ request()->routeIs('task-categories.*') ? 'active' : '' }}" href="{{ route('task-categories.index') }}">Danh mục công việc</a>
+                            <a class="sidebar-link {{ request()->routeIs('tasks.*') ? 'active' : '' }}" href="{{ route('tasks.index') }}"><span class="menu-label">Công việc</span></a>
+                        @endif
+                        <a class="sidebar-link {{ request()->routeIs('my-tasks.*') ? 'active' : '' }}" href="{{ route('my-tasks.index') }}"><span class="menu-label">Công việc của tôi</span></a>
+                        @if (in_array($roleName, ['admin', 'manager'], true))
+                            <a class="sidebar-link {{ request()->routeIs('projects.*') ? 'active' : '' }}" href="{{ route('projects.index') }}"><span class="menu-label">Dự án</span></a>
+                            <a class="sidebar-link {{ request()->routeIs('task-categories.*') ? 'active' : '' }}" href="{{ route('task-categories.index') }}"><span class="menu-label">Danh mục công việc</span></a>
                         @endif
                     </section>
 
                     @if ($roleName === 'admin')
                         <section class="sidebar-section">
                             <h2 class="sidebar-heading">Quản trị hệ thống</h2>
-                            <a class="sidebar-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">Người dùng</a>
-                            <a class="sidebar-link {{ request()->routeIs('admin.departments.*') ? 'active' : '' }}" href="{{ route('admin.departments.index') }}">Phòng ban</a>
+                            <a class="sidebar-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}"><span class="menu-label">Người dùng</span></a>
+                            <a class="sidebar-link {{ request()->routeIs('admin.departments.*') ? 'active' : '' }}" href="{{ route('admin.departments.index') }}"><span class="menu-label">Phòng ban</span></a>
                         </section>
                     @endif
                 </nav>
             </aside>
 
-            <div class="content-shell">
+            <div class="main-wrapper">
                 <header class="topbar">
                     <div>
-                        <h1 class="topbar-title">Hệ thống quản lý giao việc</h1>
-                        <p class="topbar-subtitle">@yield('title', 'Bảng điều khiển')</p>
+                        <h1 class="topbar-title">@yield('title', 'Hệ thống quản lý giao việc')</h1>
+                        <p class="topbar-subtitle">Hệ thống quản lý giao việc</p>
                     </div>
 
                     <div class="topbar-actions">
@@ -189,7 +232,9 @@
                     </div>
                 </header>
 
-                @yield('content')
+                <div class="main-content">
+                    @yield('content')
+                </div>
             </div>
         </div>
     @else
